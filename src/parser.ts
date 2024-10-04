@@ -12,6 +12,10 @@ export class Parser {
         this.tokens = tokens;
     }
 
+    public parseExpression(): Result<ExpressionNode, string> {
+        return this.parseImplication();
+    }
+
     private currentToken(): Token | null {
         return this.tokens[this.position] ?? null;
     }
@@ -20,7 +24,7 @@ export class Parser {
         return this.tokens[this.position++];
     }
 
-    public parseExpression(): Result<ExpressionNode, string> {
+    private parseImplication(): Result<ExpressionNode, string> {
         let left = this.parseDisjunction();
         if (!left.ok) {
             return left;
