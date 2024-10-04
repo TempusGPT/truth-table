@@ -16,14 +16,6 @@ export class Parser {
         return this.parseImplication();
     }
 
-    private currentToken(): Token | null {
-        return this.tokens[this.position] ?? null;
-    }
-
-    private consumeToken(): Token {
-        return this.tokens[this.position++];
-    }
-
     private parseImplication(): Result<ExpressionNode, string> {
         let left = this.parseDisjunction();
         if (!left.ok) {
@@ -115,6 +107,14 @@ export class Parser {
         }
 
         return Err(`Variable expected at position ${token ? token.position + 1 : "end of input"}`);
+    }
+
+    private currentToken(): Token | null {
+        return this.tokens[this.position] ?? null;
+    }
+
+    private consumeToken(): Token {
+        return this.tokens[this.position++];
     }
 
     private match(value: string): boolean {
