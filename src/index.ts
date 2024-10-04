@@ -25,30 +25,27 @@ function processExpression(expression: string) {
     }
 
     const parser = new Parser(tokens.value);
-    const parseResult = parser.parseExpression();
-    if (!parseResult.ok) {
-        console.error(`'${expression}' Parsing error: ${parseResult.error}`);
+    const result = parser.parseExpression();
+    if (!result.ok) {
+        console.error(`'${expression}' Parsing error: ${result.error}`);
         return;
     }
 
     const variables = getVariables(tokens.value);
     const variableNodes = variables.map((name) => new VariableNode(name));
-    const allExpressions = [...variableNodes, ...parser.subExpressions];
     const expressionMap = new Map<string, ExpressionNode>();
 
-    allExpressions.forEach((expr) => {
-        const exprStr = expr.toString();
-        if (!expressionMap.has(exprStr)) {
-            expressionMap.set(exprStr, expr);
-        }
-    });
+    [...variableNodes, ...parser.subExpressions]
+        .map((expr) => ({ key: expr.toString(), value: expr }))
+        .filter(({ key }) => !expressionMap.has(key))
+        .forEach(({ key, value }) => expressionMap.set(key, value));
 
-    const expressionsList = Array.from(expressionMap.values());
+    const expresions = Array.from(expressionMap.values());
     const assignments = generateTruthAssignments(variables);
 
-    const headers = expressionsList.map((expr) => expr.toString());
+    const headers = expresions.map((expr) => expr.toString());
     const dataRows = assignments.map((assignment) =>
-        expressionsList.map((expr) => (expr.evaluate(assignment) ? "T" : "F"))
+        expresions.map((expr) => (expr.evaluate(assignment) ? "T" : "F"))
     );
 
     printTruthTable(expression, headers, dataRows);
