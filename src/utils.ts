@@ -1,9 +1,9 @@
 import { Token } from "./tokenizer";
 
 export function getVariables(tokens: Token[]): string[] {
-    const set = new Set<string>();
-    tokens.filter(({ type }) => type === "variable").forEach(({ value }) => set.add(value));
-    return Array.from(set).toSorted();
+    return [
+        ...new Set(tokens.filter(({ type }) => type === "variable").map(({ value }) => value)),
+    ].toSorted();
 }
 
 export function getOperators(tokens: Token[]): string[] {

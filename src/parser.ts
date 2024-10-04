@@ -17,15 +17,15 @@ export class Parser {
     }
 
     private parseImplication(): Result<ExpressionNode, string> {
-        let left = this.parseDisjunction();
+        const left = this.parseDisjunction();
         if (!left.ok) {
             return left;
         }
 
         while (this.match("→")) {
             this.consumeToken();
-            const right = this.parseDisjunction();
 
+            const right = this.parseDisjunction();
             if (!right.ok) {
                 return right;
             }
@@ -38,15 +38,15 @@ export class Parser {
     }
 
     private parseDisjunction(): Result<ExpressionNode, string> {
-        let left = this.parseConjunction();
+        const left = this.parseConjunction();
         if (!left.ok) {
             return left;
         }
 
         while (this.match("∨")) {
             this.consumeToken();
-            const right = this.parseConjunction();
 
+            const right = this.parseConjunction();
             if (!right.ok) {
                 return right;
             }
@@ -59,15 +59,15 @@ export class Parser {
     }
 
     private parseConjunction(): Result<ExpressionNode, string> {
-        let left = this.parseNegation();
+        const left = this.parseNegation();
         if (!left.ok) {
             return left;
         }
 
         while (this.match("∧")) {
             this.consumeToken();
-            const right = this.parseNegation();
 
+            const right = this.parseNegation();
             if (!right.ok) {
                 return right;
             }
@@ -82,8 +82,8 @@ export class Parser {
     private parseNegation(): Result<ExpressionNode, string> {
         if (this.match("~")) {
             this.consumeToken();
-            const operand = this.parseNegation();
 
+            const operand = this.parseNegation();
             if (!operand.ok) {
                 return operand;
             }
@@ -99,26 +99,27 @@ export class Parser {
     private parsePrimary(): Result<ExpressionNode, string> {
         const token = this.currentToken();
 
-        if (token?.type === "variable") {
-            this.consumeToken();
-            const node = new VariableNode(token.value);
-            this.subExpressions.push(node);
-            return Ok(node);
+        if (token?.type !== "variable") {
+            return Err(
+                `Variable expected at position ${token ? token.position + 1 : "end of input"}.`
+            );
         }
 
-        return Err(`Variable expected at position ${token ? token.position + 1 : "end of input"}.`);
+        this.consumeToken();
+        const node = new VariableNode(token.value);
+        this.subExpressions.push(node);
+        return Ok(node);
     }
 
     private currentToken(): Token | null {
         return this.tokens[this.position] ?? null;
     }
 
-    private consumeToken(): Token {
-        return this.tokens[this.position++];
+    private consumeToken(): Token | null {
+        return this.tokens[this.position++] ?? null;
     }
 
     private match(value: string): boolean {
-        const token = this.currentToken();
-        return token?.value === value;
+        return this.currentToken()?.value === value;
     }
 }
