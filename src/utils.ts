@@ -30,7 +30,7 @@ export function generateTruthAssignments(variables: string[]): Record<string, bo
     return assignments;
 }
 
-export function printTruthTable(expression: string, headers: string[], dataRows: string[][]) {
+export function printTruthTable(headers: string[], dataRows: string[][]) {
     const columnWidths = headers.map((header, i) =>
         Math.max(...dataRows.map((row) => row[i].length), header.length)
     );

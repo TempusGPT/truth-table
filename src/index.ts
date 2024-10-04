@@ -59,7 +59,7 @@ function processExpression(expression: string) {
         expresions.map((expr) => (expr.evaluate(assignment) ? "T" : "F"))
     );
 
-    printTruthTable(expression, headers, dataRows);
+    printTruthTable(headers, dataRows);
 }
 
 main();
