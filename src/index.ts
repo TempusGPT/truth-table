@@ -10,14 +10,11 @@ function main() {
         process.exit(1);
     }
 
-    const inputFilename = process.argv[2];
-    const inputContent = readFileSync(inputFilename, "utf-8");
-    const expressions = inputContent
+    readFileSync(process.argv[2], "utf-8")
         .split("\n")
         .map((line) => line.trim())
-        .filter((line) => line.length > 0);
-
-    expressions.forEach(processExpression);
+        .filter((line) => line.length > 0)
+        .forEach(processExpression);
 }
 
 function processExpression(expression: string) {
