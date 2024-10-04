@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { tokenize } from "./tokenizer";
 import { Parser } from "./parser";
 import { VariableNode, ExpressionNode } from "./node";
-import { getVariables, generateTruthAssignments, printTruthTable } from "./utils";
+import { getVariables, generateTruthAssignments, printTruthTable, getOperators } from "./utils";
 
 function main() {
     if (process.argv.length < 3) {
@@ -24,6 +24,16 @@ function processExpression(expression: string) {
         return;
     }
 
+    const variables = getVariables(tokens.value);
+    if (variables.length > 3) {
+        throw new Error("The number of variables exceeds the maximum allowed (3).");
+    }
+
+    const operators = getOperators(tokens.value);
+    if (operators.length > 4) {
+        throw new Error("The number of operators exceeds the maximum allowed (4).");
+    }
+
     const parser = new Parser(tokens.value);
     const result = parser.parseExpression();
     if (!result.ok) {
@@ -31,7 +41,6 @@ function processExpression(expression: string) {
         return;
     }
 
-    const variables = getVariables(tokens.value);
     const variableNodes = variables.map((name) => new VariableNode(name));
     const expressionMap = new Map<string, ExpressionNode>();
 

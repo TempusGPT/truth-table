@@ -6,6 +6,10 @@ export function getVariables(tokens: Token[]): string[] {
     return Array.from(set).toSorted();
 }
 
+export function getOperators(tokens: Token[]): string[] {
+    return tokens.filter(({ type }) => type === "operator").map(({ value }) => value);
+}
+
 export function generateTruthAssignments(variables: string[]): Record<string, boolean>[] {
     const numVariables = variables.length;
     const numCombinations = 1 << numVariables;
