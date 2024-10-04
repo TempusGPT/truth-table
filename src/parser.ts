@@ -1,4 +1,4 @@
-import { ExpressionNode, VariableNode, UnaryOperatorNode, BinaryOperatorNode } from "./node";
+import { ExpressionNode, VariableNode, UnaryOperatorNode, BinaryOperatorNode } from "./nodes";
 import { Result, Ok, Err } from "./result";
 import { Token } from "./tokenizer";
 

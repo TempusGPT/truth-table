@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { tokenize } from "./tokenizer";
 import { Parser } from "./parser";
-import { VariableNode, ExpressionNode } from "./node";
+import { VariableNode, ExpressionNode } from "./nodes";
 import { getVariables, generateTruthAssignments, printTruthTable, getOperators } from "./utils";
 
 function main() {
