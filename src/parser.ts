@@ -1,12 +1,6 @@
-import {
-    Token,
-    ExpressionNode,
-    VariableNode,
-    UnaryOperatorNode,
-    BinaryOperatorNode,
-} from "./types";
-
+import { ExpressionNode, VariableNode, UnaryOperatorNode, BinaryOperatorNode } from "./node";
 import { Result, Ok, Err } from "./result";
+import { Token } from "./tokenizer";
 
 export class Parser {
     public readonly subExpressions: ExpressionNode[];

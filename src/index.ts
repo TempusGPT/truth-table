@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { tokenize } from "./tokenizer";
 import { Parser } from "./parser";
 import { getVariables, generateTruthAssignments } from "./utils";
-import { VariableNode, ExpressionNode } from "./types";
+import { VariableNode, ExpressionNode } from "./node";
 
 function main() {
     if (process.argv.length < 3) {

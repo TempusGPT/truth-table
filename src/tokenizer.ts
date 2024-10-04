@@ -1,5 +1,10 @@
-import { Token } from "./types";
 import { Result, Ok, Err } from "./result";
+
+export interface Token {
+    type: "variable" | "operator";
+    value: string;
+    position: number;
+}
 
 const operators = [..."~∧∨→"];
 const variables = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];

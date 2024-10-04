@@ -1,9 +1,3 @@
-export interface Token {
-    type: "variable" | "operator";
-    value: string;
-    position: number;
-}
-
 export abstract class ExpressionNode {
     public abstract evaluate(variables: Record<string, boolean>): boolean;
     public abstract toString(): string;

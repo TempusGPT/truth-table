@@ -1,4 +1,4 @@
-import { Token } from "./types";
+import { Token } from "./tokenizer";
 
 export function getVariables(tokens: Token[]): string[] {
     const set = new Set<string>();
