@@ -25,3 +25,29 @@ export function generateTruthAssignments(variables: string[]): Record<string, bo
 
     return assignments;
 }
+
+export function printTruthTable(expression: string, headers: string[], dataRows: string[][]) {
+    const columnWidths = headers.map((header, i) =>
+        Math.max(...dataRows.map((row) => row[i].length), header.length)
+    );
+
+    const headerLine = buildTableLine(headers, columnWidths);
+    const separatorLine = buildSeparatorLine(columnWidths);
+    const rowLines = dataRows.map((row) => buildTableLine(row, columnWidths));
+
+    console.log(`EXPR: ${expression}\n`);
+    console.log(headerLine);
+    console.log(separatorLine);
+    rowLines.forEach((line) => console.log(line));
+    console.log();
+}
+
+export function buildTableLine(cells: string[], widths: number[]): string {
+    const line = cells.map((cell, i) => cell.padEnd(widths[i])).join(" | ");
+    return `| ${line} |`;
+}
+
+export function buildSeparatorLine(widths: number[]): string {
+    const line = widths.map((width) => "-".repeat(width)).join(" | ");
+    return `| ${line} |`;
+}

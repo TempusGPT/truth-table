@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 import { tokenize } from "./tokenizer";
 import { Parser } from "./parser";
-import { getVariables, generateTruthAssignments } from "./utils";
 import { VariableNode, ExpressionNode } from "./node";
+import { getVariables, generateTruthAssignments, printTruthTable } from "./utils";
 
 function main() {
     if (process.argv.length < 3) {
@@ -49,32 +49,6 @@ function processExpression(expression: string) {
     );
 
     printTruthTable(expression, headers, dataRows);
-}
-
-function printTruthTable(expression: string, headers: string[], dataRows: string[][]) {
-    const columnWidths = headers.map((header, i) =>
-        Math.max(...dataRows.map((row) => row[i].length), header.length)
-    );
-
-    const headerLine = buildTableLine(headers, columnWidths);
-    const separatorLine = buildSeparatorLine(columnWidths);
-    const rowLines = dataRows.map((row) => buildTableLine(row, columnWidths));
-
-    console.log(`EXPR: ${expression}\n`);
-    console.log(headerLine);
-    console.log(separatorLine);
-    rowLines.forEach((line) => console.log(line));
-    console.log();
-}
-
-function buildTableLine(cells: string[], widths: number[]): string {
-    const line = cells.map((cell, i) => cell.padEnd(widths[i])).join(" | ");
-    return `| ${line} |`;
-}
-
-function buildSeparatorLine(widths: number[]): string {
-    const line = widths.map((width) => "-".repeat(width)).join(" | ");
-    return `| ${line} |`;
 }
 
 main();
