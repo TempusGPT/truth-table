@@ -20,24 +20,26 @@ function main() {
 function processExpression(expression: string) {
     const tokens = tokenize(expression);
     if (!tokens.ok) {
-        console.error(`'${expression}' Tokenization error: ${tokens.error}`);
+        console.error(`Tokenization error: ${tokens.error}\n`);
         return;
     }
 
     const variables = getVariables(tokens.value);
     if (variables.length > 3) {
-        throw new Error("The number of variables exceeds the maximum allowed (3).");
+        console.error(`Input error: The number of variables exceeds 3.\n`);
+        return;
     }
 
     const operators = getOperators(tokens.value);
     if (operators.length > 4) {
-        throw new Error("The number of operators exceeds the maximum allowed (4).");
+        console.error(`Input error: The number of operators exceeds 4.\n`);
+        return;
     }
 
     const parser = new Parser(tokens.value);
     const result = parser.parseExpression();
     if (!result.ok) {
-        console.error(`'${expression}' Parsing error: ${result.error}`);
+        console.error(`Parsing error: ${result.error}\n`);
         return;
     }
 

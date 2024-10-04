@@ -29,7 +29,7 @@ export function tokenize(expression: string): Result<Token[], string> {
             continue;
         }
 
-        return Err(`Invalid character '${char}' at position ${i + 1}`);
+        return Err(`Invalid character '${char}' at position ${i + 1}.`);
     }
 
     return Ok(tokens);

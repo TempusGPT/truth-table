@@ -106,7 +106,7 @@ export class Parser {
             return Ok(node);
         }
 
-        return Err(`Variable expected at position ${token ? token.position + 1 : "end of input"}`);
+        return Err(`Variable expected at position ${token ? token.position + 1 : "end of input"}.`);
     }
 
     private currentToken(): Token | null {

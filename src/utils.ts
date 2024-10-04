@@ -39,7 +39,6 @@ export function printTruthTable(expression: string, headers: string[], dataRows:
     const separatorLine = buildSeparatorLine(columnWidths);
     const rowLines = dataRows.map((row) => buildTableLine(row, columnWidths));
 
-    console.log(`EXPR: ${expression}\n`);
     console.log(headerLine);
     console.log(separatorLine);
     rowLines.forEach((line) => console.log(line));
